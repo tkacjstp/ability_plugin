@@ -24,7 +24,6 @@ import java.util.UUID;
 
 
 public final class Gifted extends JavaPlugin implements Listener, CommandExecutor {
-    private final JavaPlugin plugin;
     private final HashMap<UUID, String> playerAbilittes = new HashMap<>();
 
     //정멸
@@ -36,10 +35,15 @@ public final class Gifted extends JavaPlugin implements Listener, CommandExecuto
     private final HashMap<UUID, Long> thorCooldown = new HashMap<>();
     private final long THOR_COOLDOWN_MS = 10000;
 
-    public Gifted(JavaPlugin plugin) {
-        this.plugin = plugin;
+    @Override
+    public void onEnable() {
         startBlinkRecharger();
         startLocationTracker();
+
+        getServer().getPluginManager().registerEvents(this, this);
+        if (getCommand("AB") != null) {
+            getCommand("AB").setExecutor(this);
+        }
     }
 
     @Override
@@ -95,7 +99,7 @@ public final class Gifted extends JavaPlugin implements Listener, CommandExecuto
                 player.setFlying(true);
                 player.sendMessage("§b flight on");
 
-                Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                Bukkit.getScheduler().runTaskLater(this, () -> {
                     if (player.isOnline()) {
                         player.setFlying(false);
                         player.setAllowFlight(false);
@@ -179,7 +183,7 @@ public final class Gifted extends JavaPlugin implements Listener, CommandExecuto
     }
 
     private void startLocationTracker() {
-        Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+        Bukkit.getScheduler().runTaskTimer(this, () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 UUID uuid = player.getUniqueId();
                 if (!"blink".equals(playerAbilittes))
@@ -193,7 +197,7 @@ public final class Gifted extends JavaPlugin implements Listener, CommandExecuto
     }
 
     private void startBlinkRecharger() {
-        Bukkit.getScheduler().runTaskTimer(plugin, () -> {
+        Bukkit.getScheduler().runTaskTimer(this, () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 UUID uuid = player.getUniqueId();
                 if(!"blink".equals(playerAbilittes.get(uuid)))

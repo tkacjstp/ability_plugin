@@ -22,7 +22,8 @@ tasks {
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
         minecraftVersion("26.1.2")
-        jvmArgs("-Xms2G", "-Xmx2G")
+
+        jvmArgs("-Xms2G", "-Xmx2G", "-Dcom.mojang.eula.agree=true")
     }
 
     processResources {
@@ -31,4 +32,8 @@ tasks {
             expand(props)
         }
     }
+}
+tasks.jar {
+    // 빌드될 파일 이름을 'GiftedPlugin.jar'로 고정합니다.
+    archiveFileName.set("GiftedPlugin.jar")
 }
