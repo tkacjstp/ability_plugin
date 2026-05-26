@@ -1,8 +1,0 @@
-name: gifted
-version: '1.0-SNAPSHOT'
-
-main: Avengers.gifted.Gifted
-api-version: '26.1.2'
-load: POSTWORLD
-commands:
-  AB:
