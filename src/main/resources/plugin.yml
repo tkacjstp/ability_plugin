@@ -1,0 +1,8 @@
+name: gifted
+version: '${version}'
+
+main: Avengers.gifted.Gifted
+api-version: '26.1.2'
+load: POSTWORLD
+commands:
+  AB:
